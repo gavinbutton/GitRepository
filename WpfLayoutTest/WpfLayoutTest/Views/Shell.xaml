@@ -1,0 +1,52 @@
+﻿<Window x:Class="WpfLayoutTest.Views.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:views="clr-namespace:WpfLayoutTest.Views"
+        xmlns:local="clr-namespace:WpfLayoutTest"
+        mc:Ignorable="d"
+        Title="Shell" Height="331.373" Width="857.843">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Row="0" prism:RegionManager.RegionName="RibbonRegion"></ContentControl>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ContentControl Grid.Row="0" prism:RegionManager.RegionName="NavigationRegion"></ContentControl>
+                <ItemsControl Grid.Row="1" prism:RegionManager.RegionName="ModeRegion">
+                    </ItemsControl>
+            </Grid>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        Background="Black" 
+                        ShowsPreview="True"
+                        Width="5">
+            </GridSplitter>
+
+            <ContentControl Grid.Column="2" prism:RegionManager.RegionName="WorkspaceRegion"></ContentControl>
+        </Grid>
+        <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Background="Black" 
+                        ShowsPreview="True"
+                        Height="5">
+        </GridSplitter>
+        <ContentControl Grid.Row="3"  prism:RegionManager.RegionName="LogRegion"></ContentControl>
+    </Grid>
+</Window>
