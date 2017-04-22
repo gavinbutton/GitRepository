@@ -7,6 +7,10 @@ using System;
 
 namespace ModuleA
 {
+    /// <summary>
+    /// Module A stuff
+    /// </summary>
+    /// <seealso cref="Prism.Modularity.IModule" />
     public class ModuleAModule : IModule
     {
         IUnityContainer _container;
