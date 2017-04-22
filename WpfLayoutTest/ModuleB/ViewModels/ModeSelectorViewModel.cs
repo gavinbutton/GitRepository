@@ -16,7 +16,7 @@ namespace ModuleB.ViewModels
             _regionManager = regionManager;
             _logger = logger;
 
-            SwitchToModeB = new DelegateCommand<string>((navigatePath) => { _regionManager.RequestNavigate("WorkspaceRegion", navigatePath); _logger.Log($"Switched to {navigatePath}", Category.Info, Priority.High); }, (navigatePath) => true);
+            SwitchToModeB = new DelegateCommand<string>((navigatePath) => { _regionManager.RequestNavigate("WorkspaceRegion", navigatePath); _logger.Log($"Switched to {navigatePath}", Category.Info, Priority.High); }, (navigatePath) => true); 
         }
         public ICommand SwitchToModeB { get; set; }
     }
