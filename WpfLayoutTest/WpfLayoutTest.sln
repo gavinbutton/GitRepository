@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLayoutTest", "WpfLayoutTest\WpfLayoutTest.csproj", "{13EC6398-AA14-44E0-8676-83BBAAAD9FEA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,6 +11,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleA", "ModuleA\ModuleA.csproj", "{EA61A4DF-0A7F-4481-A80B-497F77C4AB01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleB", "ModuleB\ModuleB.csproj", "{9219CD04-88EE-45FB-A749-C69E86A847EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{75E3AA82-75D0-495B-8760-678646A3945C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{9219CD04-88EE-45FB-A749-C69E86A847EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9219CD04-88EE-45FB-A749-C69E86A847EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9219CD04-88EE-45FB-A749-C69E86A847EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E3AA82-75D0-495B-8760-678646A3945C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E3AA82-75D0-495B-8760-678646A3945C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E3AA82-75D0-495B-8760-678646A3945C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E3AA82-75D0-495B-8760-678646A3945C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

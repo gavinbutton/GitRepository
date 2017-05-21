@@ -83,10 +83,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AggregateEvents.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Logging\Log4NetAdapter.cs" />
-    <Compile Include="Logging\LogItem.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
@@ -152,6 +150,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{75E3AA82-75D0-495B-8760-678646A3945C}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

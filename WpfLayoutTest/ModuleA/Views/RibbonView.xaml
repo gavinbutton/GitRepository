@@ -42,7 +42,7 @@
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Keep Text Only" KeyTip="T"/>
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Paste Special..." KeyTip="S"/>
                 </RibbonMenuButton>
-                <RibbonButton SmallImageSource="/ModuleA;component/Images/cut.png" Label="Cut" KeyTip="X" />
+                <RibbonButton SmallImageSource="/ModuleA;component/Images/cut.png" Label="Cut" KeyTip="X" Command="ApplicationCommands.Cut"/>
                 <RibbonButton SmallImageSource="/ModuleA;component/Images/copy.png" Label="Copy" KeyTip="C" />
                 <RibbonButton SmallImageSource="/ModuleA;component/Images/format_painter.png" Label="Format Painter" KeyTip="FP" />
             </RibbonGroup>
@@ -52,8 +52,8 @@
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Keep Text Only" KeyTip="T"/>
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Paste Special..." KeyTip="S"/>
                 </RibbonMenuButton>
-                <RibbonButton SmallImageSource="/ModuleA;component/Images/save.png" Label="Save" KeyTip="X" />
-                <RibbonButton SmallImageSource="/ModuleA;component/Images/add.png" Label="Add" KeyTip="C" />
+                <RibbonButton SmallImageSource="/ModuleA;component/Images/save.png" Label="Save" KeyTip="X" Command="ApplicationCommands.Save"/>
+                <RibbonButton SmallImageSource="/ModuleA;component/Images/add.png" Label="Add" KeyTip="C" Command="{Binding AddCommand}"/>
             </RibbonGroup>
         </RibbonTab>
         <!-- Ribbon Tab #2: -->
