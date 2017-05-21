@@ -60,18 +60,5 @@ namespace WpfLayoutTest
         {
             return new Log4NetAdapter();
         }
-
-        /// <summary>
-        /// Run the bootstrapper process.
-        /// Informs the logger that the bootstrapping is complete
-        /// </summary>
-        /// <param name="runWithDefaultConfiguration">If <see langword="true" />, registers default Prism Library services in the container. This is the default behavior.</param>
-        public override void Run(bool runWithDefaultConfiguration)
-        {
-            base.Run(runWithDefaultConfiguration);
-            var eventAggregator = Container.Resolve<IEventAggregator>();
-            var logger = Container.Resolve<ILoggerFacade>() as Log4NetAdapter;
-            logger.StartupComplete(eventAggregator);
-        }
     }
 }

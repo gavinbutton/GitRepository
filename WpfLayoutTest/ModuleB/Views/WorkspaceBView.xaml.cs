@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModuleA.Views 
+namespace ModuleB.Views
 {
     /// <summary>
     /// Interaction logic for WorkspaceView.xaml
     /// </summary>
-    public partial class WorkspaceViewA : UserControl
+    public partial class WorkspaceBView : UserControl
     {
-        public WorkspaceViewA()
+        public WorkspaceBView()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
     }
 }

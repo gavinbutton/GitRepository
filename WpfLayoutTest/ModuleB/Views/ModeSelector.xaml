@@ -9,6 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Button Command="{Binding SwitchToModeB}" CommandParameter="WorkspaceViewB">Module B</Button>  
+        <Button Command="{Binding SwitchToModeB}" CommandParameter="WorkspaceBView">Module B</Button>  
     </Grid>
 </UserControl>

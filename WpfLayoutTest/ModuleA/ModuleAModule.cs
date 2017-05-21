@@ -26,7 +26,7 @@ namespace ModuleA
         public void Initialize()
         {
             _regionManager.AddToRegion("ModeRegion", _container.Resolve<ModeSelector>());
-            _container.RegisterTypeForNavigation<WorkspaceViewA>();
+            _container.RegisterTypeForNavigation<WorkspaceAView>();
 
             //var workspaceView = _container.Resolve<WorkspaceView>();
             _regionManager.RegisterViewWithRegion("RibbonRegion", typeof(RibbonView));
