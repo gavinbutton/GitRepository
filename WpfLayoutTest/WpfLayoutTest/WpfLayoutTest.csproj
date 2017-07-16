@@ -84,9 +84,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AggregateEvents.cs" />
-    <Compile Include="Behavior\HtmlRichTextBoxBehavior.cs" />
+    <Compile Include="Behavior\RichTextBoxBehavior.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Logging\Log4NetAdapter.cs" />
+    <Compile Include="Services\BackstageService.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">

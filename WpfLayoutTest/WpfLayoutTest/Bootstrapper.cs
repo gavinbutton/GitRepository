@@ -8,6 +8,8 @@ using WpfLayoutTest.Views;
 using Prism.Events;
 using System.Linq;
 using System.Reflection;
+using WpfLayoutTest.Services;
+using Infrastructure;
 
 namespace WpfLayoutTest
 {
@@ -36,6 +38,8 @@ namespace WpfLayoutTest
         /// </summary>
         protected override void InitializeShell()
         {
+            var backstage = new BackstageService(this.ModuleCatalog);
+            Container.RegisterInstance<IBackstageService>(backstage);
             Application.Current.MainWindow.Show();
         }
 
@@ -75,12 +79,13 @@ namespace WpfLayoutTest
             var logger = Container.Resolve<ILoggerFacade>() as Log4NetAdapter;
             logger.StartupComplete(eventAggregator);
 
-            var shell = Assembly.GetExecutingAssembly();
-            var discoveredModules =
-                new string[] { "GE bla", $"Product:{shell.GetName().Name}\nVersion:{ shell.FullName }\nPath:{shell.Location}"}
-                .Concat(this.ModuleCatalog.Modules.Select(m => $"Module:{m.ModuleName}\nVersion:{ m.ModuleType }\nPath:{m.Ref}"))
+            var backstage = Container.Resolve<IBackstageService>();
+            var productDetails = backstage.GetProductDetails();
+
+            var items = new string[] { $"Product:{productDetails.Product.Name}\nVersion:{ productDetails.Product.Version }\nPath:{productDetails.Product.Location}"}
+                .Concat(productDetails.Modules.Select(m => $"Module:{m.Name}\nVersion:{ m.Version }\nPath:{m.Location}"))
                 .ToList();
-            discoveredModules.ForEach(m => logger.Log(m, Category.Info, Priority.None));
+            items.ForEach(m => logger.Log(m, Category.Info, Priority.None));
 
         }
     }

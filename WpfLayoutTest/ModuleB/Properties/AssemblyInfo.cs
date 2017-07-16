@@ -8,7 +8,10 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ModuleB")]
-[assembly: AssemblyDescription("This is Module B")]
+[assembly: AssemblyDescription("This is Module B. Thank you for your letter received Friday 12th April.We were pleased with the responsiveness and thoroughness of the CB landscapes." +
+        "However, no soil has been removed from the plot and this was how the garden was left at completion by Bryant’s.  I have photos if you would like to see documented evidence, although I hope this will not be necessary.  I found the letter to be very accusing and not the service I would have liked to receive especially from a department entitled customer care." +
+        "As I am now responding to your correspondence there are some other points I would like to take the opportunity to raise." +
+        "Items identified at completion are still outstanding which is very disappointing considering that we have now been in residence for nearly 9 months.I know parts have to be ordered but I cannot believe that it takes 9 months to find a replacement kitchen sink.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ModuleB")]
@@ -51,5 +54,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.2")]
+[assembly: AssemblyFileVersion("1.0.0.2")]

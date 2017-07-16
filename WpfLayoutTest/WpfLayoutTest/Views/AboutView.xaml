@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfLayoutTest.Views"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:behavoir="clr-namespace:WpfLayoutTest.Behavior"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="About {Binding ProductName}" 
+        Title="{Binding Path=Application.Product.Name, StringFormat='About {0:}'}" 
         Tag="AboutWindow" 
         Width="600"
         Height="550"
@@ -27,18 +28,18 @@
         <Canvas Grid.Row="0">
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="GE" FontSize="24" Foreground="LightSteelBlue" Canvas.Left="12" Canvas.Top="0" />
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Aviation" FontSize="24" Foreground="MediumBlue" Canvas.Left="47" Canvas.Top="0" />
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ProductName}" FontSize="30" Foreground="CornflowerBlue" FontWeight="Medium" Canvas.Top="27" Canvas.Left="12" />
-            <Image Source="pack://application:,,,/WpfLayoutTest;component/Images/Monogram.png" Height="58" VerticalAlignment="Bottom" Canvas.Right="10" Canvas.Top="10"  />
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path=Application.Product.Name}" FontSize="30" Foreground="CornflowerBlue" FontWeight="Medium" Canvas.Top="27" Canvas.Left="12" />
+            <Image Source="{Binding Path=Application.Product.Icon}" Height="58" VerticalAlignment="Bottom" Canvas.Right="10" Canvas.Top="10"  />
         </Canvas>
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <TextBlock>Product details:</TextBlock>
-            <TextBlock Text="{Binding ProductDetails}"></TextBlock>
-            <TextBlock Text="{Binding ProductVersion}"></TextBlock>
-            <TextBlock Text="{Binding ProductCopyright}"></TextBlock>
+            <TextBlock Text="{Binding Path=Application.Product.Description}"></TextBlock>
+            <TextBlock Text="{Binding Path=Application.Product.Version}"></TextBlock>
+            <TextBlock Text="{Binding Path=Application.Product.Copyright}"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Vertical">
             <TextBlock>Installed Modules:</TextBlock>
-            <ListView Height="100" ItemsSource="{Binding ModuleDetails}" SelectedItem="{Binding SelectedModule}">
+            <ListView Height="100" ItemsSource="{Binding Path=Application.Modules}" SelectedItem="{Binding SelectedModule}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
@@ -49,30 +50,33 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Vertical">
+        <StackPanel Grid.Row="3" Orientation="Vertical" DataContext="{Binding SelectedModule}">
             <TextBlock>Module details:</TextBlock>
             <Border BorderBrush="Black" BorderThickness="1">
-                <StackPanel Orientation="Horizontal" Height="70">
-                    <Canvas Background="Gray" Width="70">
-                        <Image Source="{Binding Path=SelectedItem.Icon}"></Image>
-                    </Canvas>
-                    <WrapPanel>
-                        <TextBlock Text="{Binding Path=SelectedItem.Description}"></TextBlock>    
-                    </WrapPanel>
-                    
-                </StackPanel>
+                <Grid Height="70">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="70"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{Binding Icon}" Margin="5"></Image>
+                    <ScrollViewer Grid.Column="1">
+                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap"></TextBlock>
+                    </ScrollViewer>
+
+                </Grid>
             </Border>
         </StackPanel>
         <StackPanel Grid.Row="4">
-            <RichTextBox x:Name="licenseBox" IsReadOnly="True" IsDocumentEnabled="True"></RichTextBox>
+            <RichTextBox
+                Height="100"
+                VerticalScrollBarVisibility="Auto"
+                behavoir:RichTextBoxBehavior.Text="{Binding Path=Application.Product.LicenseAgreementRtf}"
+                x:Name="licenseBox" 
+                IsReadOnly="True" 
+                IsDocumentEnabled="True">
+
+            </RichTextBox>
         </StackPanel>
-
-        <!--<Label Margin="12,81,0,0" Height="23.277" HorizontalAlignment="Left" VerticalAlignment="Top">_Version:</Label>
-        <TextBox Text="{Binding Path=Version}" IsReadOnly="True" Margin="89,82,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="257" />
-        <Label  Margin="12,111,0,0" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top">_Baseline ID:</Label>
-        <TextBox Text="{Binding Path=BaselineId}" IsReadOnly="True" Margin="89,113,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="257" />
-        <Label Height="24" Margin="12,144,0,0" VerticalAlignment="Top" FontSize="9" HorizontalAlignment="Left" Content="{Binding Path=Copyright}"></Label>-->
-
     </Grid>
 </Window>
 

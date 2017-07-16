@@ -73,8 +73,12 @@
   <ItemGroup>
     <Compile Include="AggregateEvents.cs" />
     <Compile Include="AttachedProperties.cs" />
+    <Compile Include="IBackstageService.cs" />
     <Compile Include="InfrastructureCommands.cs" />
     <Compile Include="LogItem.cs" />
+    <Compile Include="AssemblyIconAttribute.cs" />
+    <Compile Include="Models\ModuleDetails.cs" />
+    <Compile Include="Models\ProductDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

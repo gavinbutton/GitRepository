@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,11 @@ using System.Windows.Documents;
 
 namespace WpfLayoutTest.Behavior
 {
-    public class HtmlRichTextBoxBehavior : DependencyObject
+    public class RichTextBoxBehavior : DependencyObject
     {
         public static readonly DependencyProperty TextProperty =
           DependencyProperty.RegisterAttached("Text", typeof(string),
-          typeof(HtmlRichTextBoxBehavior), new UIPropertyMetadata(null, OnValueChanged));
+          typeof(RichTextBoxBehavior), new UIPropertyMetadata(null, OnValueChanged));
 
         public static string GetText(RichTextBox o) { return (string)o.GetValue(TextProperty); }
 
@@ -23,12 +24,37 @@ namespace WpfLayoutTest.Behavior
         private static void OnValueChanged(DependencyObject dependencyObject,
           DependencyPropertyChangedEventArgs e)
         {
-            //var richTextBox = (RichTextBox)dependencyObject;
-            //var text = (e.NewValue ?? string.Empty).ToString();
-            //var xaml = HtmlToXamlConverter.ConvertHtmlToXaml(text, true);
-            //var flowDocument = XamlReader.Parse(xaml) as FlowDocument;
-            //HyperlinksSubscriptions(flowDocument);
-            //richTextBox.Document = flowDocument;
+            var richTextBox = (RichTextBox)dependencyObject;
+            var text = (e.NewValue ?? string.Empty).ToString();
+            LoadRTF(text, richTextBox);
+        }
+
+        private static void LoadRTF(string rtf, RichTextBox richTextBox)
+        {
+
+            if (string.IsNullOrEmpty(rtf))
+            {
+                throw new ArgumentNullException();
+            }
+
+            TextRange textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+
+            //Create a MemoryStream of the Rtf content
+
+            using (MemoryStream rtfMemoryStream = new MemoryStream())
+            {
+                using (StreamWriter rtfStreamWriter = new StreamWriter(rtfMemoryStream))
+                {
+                    rtfStreamWriter.Write(rtf);
+                    rtfStreamWriter.Flush();
+                    rtfMemoryStream.Seek(0, SeekOrigin.Begin);
+
+                    //Load the MemoryStream into TextRange ranging from start to end of RichTextBox.
+                    textRange.Load(rtfMemoryStream, DataFormats.Rtf);
+                }
+            }
+
+            HyperlinksSubscriptions(richTextBox.Document);
         }
 
         private static void HyperlinksSubscriptions(FlowDocument flowDocument)
