@@ -1,34 +1,22 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using Infrastructure;
+using Prism.Commands;
+using Prism.Events;
 using System.Windows.Input;
 
 namespace ModuleA.ViewModels
 {
-    class RibbonViewModel : BindableBase
+    class RibbonViewModel : ViewModel
     {
-        public RibbonViewModel()
+        public RibbonViewModel(IEventAggregator ea)
         {
-            AddCommand = new DelegateCommand(OnAddCommand, CanAddCommand);
-        }
-        
-        public DelegateCommand AddCommand { get; set; }
-
-        private void OnAddCommand()
-        {
-            if(CanAddCommand())
-            {
-                ModuleA.Commands.ModuleACommands.ApplicationAddCommand.Execute(this.AddCommand);
-            }
+            AboutCommand = new DelegateCommand(() => ea.GetEvent<AboutCommandEvent>().Publish());
         }
 
-        private bool CanAddCommand()
-        {
+        ICommand AddButton { get; set; }
 
-            bool canAdd = ModuleA.Commands.ModuleACommands.ApplicationAddCommand.CanExecute(this.AddCommand);
-            return canAdd;
-            //return true;
-        }
+        public DelegateCommand DeleteCommand {get;set;}
 
-        
+        public DelegateCommand AboutCommand { get; set; }
+
     }
 }

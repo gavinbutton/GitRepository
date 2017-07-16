@@ -1,0 +1,78 @@
+﻿<Window x:Class="WpfLayoutTest.Views.AboutView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfLayoutTest.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        mc:Ignorable="d"
+        Title="About {Binding ProductName}" 
+        Tag="AboutWindow" 
+        Width="600"
+        Height="550"
+        RenderOptions.BitmapScalingMode="NearestNeighbor" 
+        ResizeMode="NoResize" 
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="150"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Canvas Grid.Row="0">
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="GE" FontSize="24" Foreground="LightSteelBlue" Canvas.Left="12" Canvas.Top="0" />
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Aviation" FontSize="24" Foreground="MediumBlue" Canvas.Left="47" Canvas.Top="0" />
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ProductName}" FontSize="30" Foreground="CornflowerBlue" FontWeight="Medium" Canvas.Top="27" Canvas.Left="12" />
+            <Image Source="pack://application:,,,/WpfLayoutTest;component/Images/Monogram.png" Height="58" VerticalAlignment="Bottom" Canvas.Right="10" Canvas.Top="10"  />
+        </Canvas>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <TextBlock>Product details:</TextBlock>
+            <TextBlock Text="{Binding ProductDetails}"></TextBlock>
+            <TextBlock Text="{Binding ProductVersion}"></TextBlock>
+            <TextBlock Text="{Binding ProductCopyright}"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+            <TextBlock>Installed Modules:</TextBlock>
+            <ListView Height="100" ItemsSource="{Binding ModuleDetails}" SelectedItem="{Binding SelectedModule}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding Name}"></Run>
+                            <Run Text="{Binding Version}" Foreground="Gray"></Run>
+                        </TextBlock>    
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Vertical">
+            <TextBlock>Module details:</TextBlock>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Height="70">
+                    <Canvas Background="Gray" Width="70">
+                        <Image Source="{Binding Path=SelectedItem.Icon}"></Image>
+                    </Canvas>
+                    <WrapPanel>
+                        <TextBlock Text="{Binding Path=SelectedItem.Description}"></TextBlock>    
+                    </WrapPanel>
+                    
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="4">
+            <RichTextBox x:Name="licenseBox" IsReadOnly="True" IsDocumentEnabled="True"></RichTextBox>
+        </StackPanel>
+
+        <!--<Label Margin="12,81,0,0" Height="23.277" HorizontalAlignment="Left" VerticalAlignment="Top">_Version:</Label>
+        <TextBox Text="{Binding Path=Version}" IsReadOnly="True" Margin="89,82,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="257" />
+        <Label  Margin="12,111,0,0" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top">_Baseline ID:</Label>
+        <TextBox Text="{Binding Path=BaselineId}" IsReadOnly="True" Margin="89,113,0,0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="257" />
+        <Label Height="24" Margin="12,144,0,0" VerticalAlignment="Top" FontSize="9" HorizontalAlignment="Left" Content="{Binding Path=Copyright}"></Label>-->
+
+    </Grid>
+</Window>
+

@@ -18,9 +18,9 @@ namespace ModuleB.Views
     /// <summary>
     /// Interaction logic for WorkspaceView.xaml
     /// </summary>
-    public partial class WorkspaceBView : UserControl
+    public partial class WorkspaceViewB : UserControl
     {
-        public WorkspaceBView()
+        public WorkspaceViewB()
         {
             InitializeComponent();
         }

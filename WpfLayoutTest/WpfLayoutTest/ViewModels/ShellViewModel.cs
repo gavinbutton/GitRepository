@@ -1,4 +1,7 @@
-﻿using Prism.Mvvm;
+﻿using Infrastructure;
+using Microsoft.Practices.Unity;
+using Prism.Events;
+using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -11,10 +14,19 @@ namespace WpfLayoutTest.ViewModels
 {
     class ShellViewModel : BindableBase
     {
-        public ShellViewModel(IRegionManager regionManager)
+        private IUnityContainer m_container;
+        public ShellViewModel(IRegionManager regionManager, IEventAggregator ea, IUnityContainer container)
         {
+            m_container = container;
             regionManager.RegisterViewWithRegion("LogRegion", typeof(LogView));
-            //regionManager.RegisterViewWithRegion("ModeRegion", typeof(ModeView));
+            ea.GetEvent<AboutCommandEvent>().Subscribe(OnAbout);
+        }
+
+        private void OnAbout()
+        {
+            var dialog = m_container.Resolve<AboutView>();
+            dialog.Owner = App.Current.MainWindow;
+            dialog.Show();
         }
     }
 }

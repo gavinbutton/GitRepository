@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{75E3AA82-75D0-495B-8760-678646A3945C}</ProjectGuid>
+    <ProjectGuid>{D6128028-29A5-4D3A-B9A1-E2922CCEF3A9}</ProjectGuid>
     <OutputType>library</OutputType>
     <RootNamespace>Infrastructure</RootNamespace>
     <AssemblyName>Infrastructure</AssemblyName>
@@ -71,9 +71,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregateEvents.cs" />
     <Compile Include="AttachedProperties.cs" />
-    <Compile Include="BindableActiveAwareBase.cs" />
-    <Compile Include="GlobalCommands.cs" />
+    <Compile Include="InfrastructureCommands.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

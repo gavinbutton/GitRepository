@@ -6,6 +6,8 @@ using Prism.Logging;
 using WpfLayoutTest.Logging;
 using WpfLayoutTest.Views;
 using Prism.Events;
+using System.Linq;
+using System.Reflection;
 
 namespace WpfLayoutTest
 {
@@ -59,6 +61,27 @@ namespace WpfLayoutTest
         protected override ILoggerFacade CreateLogger()
         {
             return new Log4NetAdapter();
+        }
+
+        /// <summary>
+        /// Run the bootstrapper process.
+        /// Informs the logger that the bootstrapping is complete
+        /// </summary>
+        /// <param name="runWithDefaultConfiguration">If <see langword="true" />, registers default Prism Library services in the container. This is the default behavior.</param>
+        public override void Run(bool runWithDefaultConfiguration)
+        {
+            base.Run(runWithDefaultConfiguration);
+            var eventAggregator = Container.Resolve<IEventAggregator>();
+            var logger = Container.Resolve<ILoggerFacade>() as Log4NetAdapter;
+            logger.StartupComplete(eventAggregator);
+
+            var shell = Assembly.GetExecutingAssembly();
+            var discoveredModules =
+                new string[] { "GE bla", $"Product:{shell.GetName().Name}\nVersion:{ shell.FullName }\nPath:{shell.Location}"}
+                .Concat(this.ModuleCatalog.Modules.Select(m => $"Module:{m.ModuleName}\nVersion:{ m.ModuleType }\nPath:{m.Ref}"))
+                .ToList();
+            discoveredModules.ForEach(m => logger.Log(m, Category.Info, Priority.None));
+
         }
     }
 }

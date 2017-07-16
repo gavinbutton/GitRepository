@@ -2,18 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:Infrastructure="clr-namespace:Infrastructure;assembly=Infrastructure"
              xmlns:local="clr-namespace:ModuleA.Views"
-             xmlns:Infrastructure="clr-namespace:WpfLayoutTest.Infrastructure;assembly=Infrastructure"
-             prism:ViewModelLocator.AutoWireViewModel="True" 
              mc:Ignorable="d" 
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="300" d:DesignWidth="300"
              Infrastructure:AttachedProperties.RegisterCommandBindings="{Binding CommandBindings}"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <TextBlock>Workspace view A</TextBlock>
-        <TextBox>Hello World</TextBox>
-        <TextBlock Text="{Binding LabelText}"></TextBlock>
-        <CheckBox IsChecked="{Binding CanAddFlag}">Can Add Application</CheckBox>
-    </StackPanel>
+             >
+    <Grid>
+        <ListView ItemsSource="{Binding Items}"></ListView>      
+    </Grid>
 </UserControl>

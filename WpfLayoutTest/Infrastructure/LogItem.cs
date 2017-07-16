@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfLayoutTest.Infrastructure
+namespace Infrastructure
 {
     /// <summary>
     /// A simple log item

@@ -1,11 +1,11 @@
-﻿using log4net;
+﻿using Infrastructure;
+using log4net;
 using Prism.Events;
 using Prism.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WpfLayoutTest.Infrastructure;
 
 /// <summary>
 /// 
@@ -26,7 +26,12 @@ namespace WpfLayoutTest.Logging
         private readonly ILog _Logger = LogManager.GetLogger(typeof(Log4NetAdapter));
 
         /// <summary>
-        /// A storage queue for log items while we are waiting for PRISM/Views to initialise
+        /// The event aggregator
+        /// </summary>
+        private IEventAggregator _eventAggregator;
+
+        /// <summary>
+        /// A storage queue for log items while we are waiting for PRISM to initialise
         /// </summary>
         private Queue<LogItem> _logQueue = new Queue<LogItem>();
 
@@ -35,22 +40,18 @@ namespace WpfLayoutTest.Logging
         /// </summary>
         public Log4NetAdapter()
         {
-            // Listen for changes in the subscription state
-            GlobalCommands.LogCommand.CanExecuteChanged += LogCommand_CanExecuteChanged;
+
         }
 
         /// <summary>
-        /// Handles the CanExecuteChanged event of the LogCommand control.
+        /// Called by the bootstrapper to notify that the bootstrapper has been initialised
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void LogCommand_CanExecuteChanged(object sender, EventArgs e)
+        /// <param name="eventAgregator">The event agregator.</param>
+        public void StartupComplete(IEventAggregator eventAgregator)
         {
-            if (GlobalCommands.LogCommand.CanExecute(null))
-            {
-                _logQueue.ToList().ForEach(item => NotifyItemAdded(item));
-                _logQueue.Clear();
-            }
+            _eventAggregator = eventAgregator;
+            _logQueue.ToList().ForEach(item => NotifyItemAdded(item));
+            _logQueue.Clear();
         }
 
         /// <summary>
@@ -88,11 +89,10 @@ namespace WpfLayoutTest.Logging
         /// <param name="item">The item.</param>
         private void NotifyItemAdded(LogItem item)
         {
-            // if we havent got any subscriptions for the LogCommand then store the log event until we have
-            if (GlobalCommands.LogCommand.CanExecute(null))
+            // if we havent got a reference to the PRISM event aggrergator yet then store the log event until we have
+            if (_eventAggregator != null)
             {
-
-                GlobalCommands.LogCommand.Execute(item);
+                _eventAggregator.GetEvent<LogEvent>().Publish(item);
             }
             else
             {

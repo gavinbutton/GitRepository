@@ -32,6 +32,7 @@
             <RibbonApplicationMenu KeyTip="F">
                 <RibbonApplicationMenuItem Header="Options" ImageSource="/ModuleA;component/Images/options.png" />
                 <RibbonApplicationMenuItem Header="Exit" ImageSource="/ModuleA;component/Images/quit.png" />
+                <RibbonApplicationMenuItem Header="About" Command="{Binding AboutCommand}"/>
             </RibbonApplicationMenu>
         </Ribbon.ApplicationMenu>
         <!-- Ribbon Tab #1: Home -->
@@ -42,8 +43,10 @@
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Keep Text Only" KeyTip="T"/>
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Paste Special..." KeyTip="S"/>
                 </RibbonMenuButton>
-                <RibbonButton SmallImageSource="/ModuleA;component/Images/cut.png" Label="Cut" KeyTip="X" Command="ApplicationCommands.Cut"/>
+                <RibbonButton SmallImageSource="/ModuleA;component/Images/cut.png" Label="Cut" KeyTip="X" />
                 <RibbonButton SmallImageSource="/ModuleA;component/Images/copy.png" Label="Copy" KeyTip="C" />
+                <!--<RibbonButton SmallImageSource="/ModuleA;component/Images/error.png" Label="Delete" Command="{Binding DeleteCommand}"/>-->
+                <RibbonButton SmallImageSource="/ModuleA;component/Images/error.png" Label="Delete" Command="ApplicationCommands.Delete"/>
                 <RibbonButton SmallImageSource="/ModuleA;component/Images/format_painter.png" Label="Format Painter" KeyTip="FP" />
             </RibbonGroup>
             <!-- Employee And Payroll group-->
@@ -52,8 +55,8 @@
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Keep Text Only" KeyTip="T"/>
                     <RibbonMenuItem ImageSource="/ModuleA;component/Images/paste.png" Header="Paste Special..." KeyTip="S"/>
                 </RibbonMenuButton>
-                <RibbonButton SmallImageSource="/ModuleA;component/Images/save.png" Label="Save" KeyTip="X" Command="ApplicationCommands.Save"/>
-                <RibbonButton SmallImageSource="/ModuleA;component/Images/add.png" Label="Add" KeyTip="C" Command="{Binding AddCommand}"/>
+                <RibbonButton SmallImageSource="/ModuleA;component/Images/save.png" Label="Save" KeyTip="X" />
+                <RibbonButton SmallImageSource="/ModuleA;component/Images/add.png" Label="Add" KeyTip="C" />
             </RibbonGroup>
         </RibbonTab>
         <!-- Ribbon Tab #2: -->

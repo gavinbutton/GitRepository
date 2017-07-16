@@ -1,4 +1,4 @@
-﻿using Prism.Commands;
+﻿using Infrastructure;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfLayoutTest.Infrastructure;
 using WpfLayoutTest.Logging;
 
 namespace WpfLayoutTest.ViewModels
@@ -16,7 +15,7 @@ namespace WpfLayoutTest.ViewModels
     /// VM for the log view
     /// </summary>
     /// <seealso cref="Prism.Mvvm.BindableBase" />
-    class LogViewModel : BindableActiveAwareBase
+    class LogViewModel : BindableBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LogViewModel"/> class.
@@ -25,8 +24,7 @@ namespace WpfLayoutTest.ViewModels
         public LogViewModel(IEventAggregator eventAggregator)
         {
             // listen for any log update events
-            var logCommand = new DelegateCommand<LogItem>(item => LogHistory.Add(item));
-            GlobalCommands.LogCommand.RegisterCommand(logCommand);
+            eventAggregator.GetEvent<LogEvent>().Subscribe(item => LogHistory.Add(item));    
         }
 
         /// <summary>

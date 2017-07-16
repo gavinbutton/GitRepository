@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
-namespace WpfLayoutTest.Infrastructure
+namespace Infrastructure
 {
     public class AttachedProperties
     {

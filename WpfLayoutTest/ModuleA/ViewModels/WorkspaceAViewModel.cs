@@ -1,4 +1,6 @@
-﻿using Prism.Commands;
+﻿using Infrastructure;
+using Prism.Events;
+using Prism.Logging;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -6,28 +8,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WpfLayoutTest.Infrastructure;
 
 namespace ModuleA.ViewModels
 {
-    class WorkspaceAViewModel : BindableActiveAwareBase
+    public class WorkspaceAViewModel : BindableBase
     {
-        private DelegateCommand<object> _addCommand; 
-        public WorkspaceAViewModel()
+        private IEventAggregator m_eventAggregator;
+        private ILoggerFacade m_logger;
+
+        public WorkspaceAViewModel(IEventAggregator ea, ILoggerFacade logger)
         {
-            // Create a command binding to this view model
-            CommandBinding testCommandBinding = new CommandBinding(ApplicationCommands.Save, OnTestRouteExecute, OnTestRouteCanExecute);
+            CommandBinding deleteItemCommandBinding = new CommandBinding(ApplicationCommands.Delete, OnDelete, CanDelete);
+            CommandManager.RegisterClassCommandBinding(typeof(WorkspaceAViewModel), deleteItemCommandBinding);
+            CommandBindings.Add(deleteItemCommandBinding);
+            m_eventAggregator = ea;
+            m_logger = logger;
+        }
 
-            //Register the binding to the class
-            CommandManager.RegisterClassCommandBinding(typeof(WorkspaceAViewModel), testCommandBinding);
+        private IEnumerable<string> m_items = new string[] { "A", "B", "C" };
 
-            //Adds the binding to the CommandBindingCollection
-            _CommandBindings.Add(testCommandBinding);
+        public IEnumerable<string> Items
+        {
+            get
+            {
+                return m_items;
+            }
 
-            //register commands we are interested in
-            _addCommand = new DelegateCommand<object>(OnApplicationAdd, CanApplicationAdd).ObservesProperty(() => CanAddFlag);
-            ModuleA.Commands.ModuleACommands.ApplicationAddCommand.RegisterCommand(_addCommand);
-
+            set
+            {
+                SetProperty(ref m_items, value);
+            }
         }
 
         private readonly CommandBindingCollection _CommandBindings = new CommandBindingCollection();
@@ -39,44 +49,14 @@ namespace ModuleA.ViewModels
             }
         }
 
-        private bool _canAddFlag = false;
-        public bool CanAddFlag
+        private void OnDelete(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-            get { return _canAddFlag; }
-            set
-                {
-                    SetProperty(ref _canAddFlag, value);
-                }
+            m_logger.Log("Deleted Item", Prism.Logging.Category.Info, Priority.None);
         }
 
-        public string LabelText { get => _labelText; set => SetProperty(ref _labelText, value); }
-        
-
-        private string _labelText = string.Empty;
-
-        #region On Test Routed Command
-
-        public void OnTestRouteCanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        private void CanDelete(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
-
-        public void OnTestRouteExecute(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-        {
-            this.LabelText = "Test RouteUICommand have been clicked and Executed!";
-        }
-
-        public void OnApplicationAdd(object c)
-        {
-
-        }
-
-        public bool CanApplicationAdd(object c)
-        {
-            this.LabelText = DateTime.Now.ToString();
-            return CanAddFlag;
-        }
-
-        #endregion
     }
 }

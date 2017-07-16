@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfLayoutTest.Infrastructure
+namespace Infrastructure
 {
-    public class GlobalCommands
+    public class InfrastructureCommands
     {
-        public static readonly CompositeCommand LogCommand = new CompositeCommand();
+
     }
 }

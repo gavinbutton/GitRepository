@@ -21,7 +21,7 @@ namespace ModuleB
         public void Initialize()
         {
             _regionManager.AddToRegion("ModeRegion", _container.Resolve<ModeSelector>());
-            _container.RegisterTypeForNavigation<WorkspaceBView>();
+            _container.RegisterTypeForNavigation<WorkspaceViewB>();
         }
     }
 }

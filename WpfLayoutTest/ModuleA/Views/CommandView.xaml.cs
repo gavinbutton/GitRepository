@@ -12,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ModuleA.ViewModels;
-using Prism.Events;
 
 namespace ModuleA.Views
 {
     /// <summary>
-    /// Interaction logic for RibbonView.xaml
+    /// Interaction logic for CommandView.xaml
     /// </summary>
-    public partial class RibbonView : UserControl
+    public partial class CommandView : UserControl
     {
-        public RibbonView(IEventAggregator ea)
+        public CommandView()
         {
             InitializeComponent();
-            this.DataContext = new RibbonViewModel(ea);
         }
     }
 }

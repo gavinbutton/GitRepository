@@ -7,10 +7,6 @@ using System;
 
 namespace ModuleA
 {
-    /// <summary>
-    /// Module A stuff
-    /// </summary>
-    /// <seealso cref="Prism.Modularity.IModule" />
     public class ModuleAModule : IModule
     {
         IUnityContainer _container;
@@ -30,6 +26,7 @@ namespace ModuleA
 
             //var workspaceView = _container.Resolve<WorkspaceView>();
             _regionManager.RegisterViewWithRegion("RibbonRegion", typeof(RibbonView));
+            _regionManager.RegisterViewWithRegion("CommandRegion", typeof(CommandView));
             //_regionManager.RegisterViewWithRegion("WorkspaceRegion", typeof(WorkspaceView));
             //IRegion region = _regionManager.Regions["WorkspaceRegion"];
             //region.Activate(workspaceView);
