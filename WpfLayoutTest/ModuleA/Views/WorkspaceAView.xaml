@@ -6,12 +6,67 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:Infrastructure="clr-namespace:Infrastructure;assembly=Infrastructure"
              xmlns:local="clr-namespace:ModuleA.Views"
+             xmlns:vm="clr-namespace:ModuleA.Models"
+             xmlns:b="clr-namespace:ModuleA.Behaviours"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="300" d:DesignWidth="300"
              Infrastructure:AttachedProperties.RegisterCommandBindings="{Binding CommandBindings}"
              >
+    <UserControl.Resources>
+        
+        <Style x:Key="EditableContentControl" TargetType="{x:Type ContentControl}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate DataType="{x:Type vm:HierarchicalItem}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Image}"></Image>
+                            <TextBlock Text="{Binding Path=Name}" />
+                        </StackPanel>
+                        
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsEditing}"
+                 Value="True">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate DataType="{x:Type vm:HierarchicalItem}">
+                                <TextBox Text="{Binding Path=Name}">
+                                    <i:Interaction.Behaviors>
+                                        <b:TabOnEnterBehavior />
+                                    </i:Interaction.Behaviors>
+
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Key="Esc"  Command="{Binding EscapeKeyCommand}"></KeyBinding>
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <HierarchicalDataTemplate x:Key="WidgetTemplate" ItemsSource="{Binding Children}">
+            
+            <ContentControl Content="{Binding}" Style="{StaticResource EditableContentControl}"/>
+        </HierarchicalDataTemplate>
+    </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Items}"></ListView>      
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemsSource="{Binding Items}"></ListView>
+        <TreeView Grid.Column="1" 
+                  ItemsSource="{Binding TreeItems}" 
+                  ItemTemplate="{StaticResource WidgetTemplate}"
+                  b:MouseDoubleClickBehaviour.Command="{Binding EditCommand}"
+                  b:MouseDoubleClickBehaviour.CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Self}}"
+                  >
+        </TreeView>
     </Grid>
 </UserControl>

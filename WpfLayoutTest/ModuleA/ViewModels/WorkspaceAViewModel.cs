@@ -1,4 +1,6 @@
 ﻿using Infrastructure;
+using ModuleA.Models;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Logging;
 using Prism.Mvvm;
@@ -8,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace ModuleA.ViewModels
 {
@@ -23,6 +26,40 @@ namespace ModuleA.ViewModels
             CommandBindings.Add(deleteItemCommandBinding);
             m_eventAggregator = ea;
             m_logger = logger;
+
+            EditCommand = new DelegateCommand<HierarchicalItem>(item =>
+            {
+                TreeItems.Flatten(i => i.Children).ToList().ForEach(i => i.IsEditing = false);
+                item.IsEditing = true;
+            });
+
+            TreeItems = new HierarchicalItem[]
+            {
+                new HierarchicalItem()
+                {
+                    Image = new BitmapImage(new Uri("pack://application:,,,/ModuleA;component/Images/add.png")),
+                    Name = "Add",
+                    Children = new HierarchicalItem[]
+                    {
+                        new HierarchicalItem()
+                        {
+                            Image = new BitmapImage(new Uri("pack://application:,,,/ModuleA;component/Images/add.png")),
+                            Name = "Minus",
+                        },
+                        new HierarchicalItem()
+                        {
+                            Image = new BitmapImage(new Uri("pack://application:,,,/ModuleA;component/Images/add.png")),
+                            Name = "Multiply",
+                        },
+                        new HierarchicalItem()
+                        {
+                            Image = new BitmapImage(new Uri("pack://application:,,,/ModuleA;component/Images/add.png")),
+                            Name = "Divide",
+                        },
+                    }
+                }
+                
+            };
         }
 
         private IEnumerable<string> m_items = new string[] { "A", "B", "C" };
@@ -40,6 +77,20 @@ namespace ModuleA.ViewModels
             }
         }
 
+        private IEnumerable<HierarchicalItem> m_treeItems;
+
+        public IEnumerable<HierarchicalItem> TreeItems
+        {
+            get
+            {
+                return m_treeItems;
+            }
+            set
+            {
+                SetProperty(ref m_treeItems, value);
+            }
+        }
+
         private readonly CommandBindingCollection _CommandBindings = new CommandBindingCollection();
         public CommandBindingCollection CommandBindings
         {
@@ -48,6 +99,8 @@ namespace ModuleA.ViewModels
                 return _CommandBindings;
             }
         }
+
+        public DelegateCommand<HierarchicalItem> EditCommand { get; set; }
 
         private void OnDelete(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
