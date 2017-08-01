@@ -13,7 +13,7 @@ namespace ModuleA.Models
     {
         public HierarchicalItem()
         {
-            EscapeKeyCommand = new DelegateCommand(() => Name = m_oldName);
+            
         }
 
         public BitmapImage Image { get; set; }
@@ -25,8 +25,39 @@ namespace ModuleA.Models
             get { return m_name; }
             set
             {
-                SetProperty(ref m_name, value);
+                var errorMessage = GetErrorMessage(value);
+                SetProperty(ref m_name, string.IsNullOrEmpty(errorMessage) ? value : m_oldName);
+
+                ErrorMessage = errorMessage;
                 IsEditing = false;
+            }
+        }
+
+        public void RevertEdit()
+        {
+            Name = m_oldName;
+        }
+
+        string m_errorMessage;
+        public string ErrorMessage
+        {
+            get
+            {
+                return m_errorMessage;
+            }
+
+            set
+            {
+                SetProperty(ref m_errorMessage, value);
+                RaisePropertyChanged("HasError");
+            }
+        }
+
+        public bool HasError
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(ErrorMessage);
             }
         }
 
@@ -46,7 +77,17 @@ namespace ModuleA.Models
             }
         }
         
-        public DelegateCommand EscapeKeyCommand { get; set; }
+        private string GetErrorMessage(string name)
+        {
+            string errorMessage = string.Empty;
+
+            if(name.Contains("Gav"))
+            {
+                errorMessage = "Name contains[Gav]";
+            }
+
+            return errorMessage;
+        }
     }
 
     public static class Extensions

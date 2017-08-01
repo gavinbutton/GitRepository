@@ -9,13 +9,47 @@
              xmlns:vm="clr-namespace:ModuleA.Models"
              xmlns:b="clr-namespace:ModuleA.Behaviours"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="300" d:DesignWidth="300"
              Infrastructure:AttachedProperties.RegisterCommandBindings="{Binding CommandBindings}"
              >
     <UserControl.Resources>
-        
+        <Storyboard x:Key="fadeTextAnimation">
+            <!--<ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
+                                           Storyboard.TargetProperty="(UIElement.Visibility)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}" />
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:3" Value="{x:Static Visibility.Hidden}"/>
+                                </ObjectAnimationUsingKeyFrames>-->
+            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style x:Key="PopupStyle" TargetType="{x:Type Popup}">
+            <Style.Triggers>
+                <Trigger Property="IsOpen" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames BeginTime="0:0:3" Storyboard.TargetProperty="(Popup.IsOpen)">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <sys:Boolean>False</sys:Boolean>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
         <Style x:Key="EditableContentControl" TargetType="{x:Type ContentControl}">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
@@ -23,8 +57,28 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding Image}"></Image>
                             <TextBlock Text="{Binding Path=Name}" />
+                            <Popup Name="pop" 
+                                   Style="{StaticResource PopupStyle}" 
+                                   IsOpen="{Binding HasError, Mode=OneWay}" 
+                                   Placement="Relative"
+                                   AllowsTransparency="True">
+                                <Grid>
+                                    <TextBlock Background="Red" Foreground="White" Text="{Binding ErrorMessage}">
+                                        <TextBlock.Triggers>
+                                            <EventTrigger RoutedEvent="Loaded">
+                                                <EventTrigger.Actions>
+                                                    <BeginStoryboard>
+                                                        <StaticResource ResourceKey="fadeTextAnimation">
+                                                        </StaticResource>
+                                                    </BeginStoryboard>
+                                                </EventTrigger.Actions>
+                                            </EventTrigger>
+                                        </TextBlock.Triggers>
+                                    </TextBlock>
+                                </Grid>
+                            </Popup>
                         </StackPanel>
-                        
+
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -34,15 +88,22 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate DataType="{x:Type vm:HierarchicalItem}">
-                                <TextBox Text="{Binding Path=Name}">
-                                    <i:Interaction.Behaviors>
-                                        <b:TabOnEnterBehavior />
-                                    </i:Interaction.Behaviors>
+                                <StackPanel>
+                                    <TextBox Text="{Binding Path=Name}">
+                                        <i:Interaction.Behaviors>
+                                            <b:TabOnEnterBehavior />
+                                        </i:Interaction.Behaviors>
 
-                                    <TextBox.InputBindings>
-                                        <KeyBinding Key="Esc"  Command="{Binding EscapeKeyCommand}"></KeyBinding>
-                                    </TextBox.InputBindings>
-                                </TextBox>
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Esc" 
+                                                        Command="{Binding DataContext.RevertEditCommand, 
+                                                                            RelativeSource={RelativeSource FindAncestor, 
+                                                                            AncestorType={x:Type local:WorkspaceAView}}}" 
+                                                        CommandParameter="{Binding}"></KeyBinding>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                    
+                                </StackPanel>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -53,6 +114,7 @@
         <HierarchicalDataTemplate x:Key="WidgetTemplate" ItemsSource="{Binding Children}">
             
             <ContentControl Content="{Binding}" Style="{StaticResource EditableContentControl}"/>
+            
         </HierarchicalDataTemplate>
     </UserControl.Resources>
     <Grid>
@@ -68,5 +130,7 @@
                   b:MouseDoubleClickBehaviour.CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Self}}"
                   >
         </TreeView>
+        
+
     </Grid>
 </UserControl>

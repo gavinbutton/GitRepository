@@ -33,6 +33,8 @@ namespace ModuleA.ViewModels
                 item.IsEditing = true;
             });
 
+            RevertEditCommand = new DelegateCommand<HierarchicalItem>((item) => item.RevertEdit());
+
             TreeItems = new HierarchicalItem[]
             {
                 new HierarchicalItem()
@@ -101,6 +103,8 @@ namespace ModuleA.ViewModels
         }
 
         public DelegateCommand<HierarchicalItem> EditCommand { get; set; }
+
+        public DelegateCommand<HierarchicalItem> RevertEditCommand { get; set; }
 
         private void OnDelete(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
