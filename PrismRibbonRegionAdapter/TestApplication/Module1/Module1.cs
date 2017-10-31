@@ -24,7 +24,6 @@ namespace TestApplication.Module1
             m_container.RegisterType<Module1HelloCommand, Module1HelloCommand>();
 
             _regionManager.RegisterViewWithRegion(ShellRegions.EditorContextMenu, GetContextMenu);
-			//_regionManager.RegisterViewWithRegion(ShellRegions.MainMenu, typeof(Ribbon));
 		}
 
 		private object GetContextMenu()

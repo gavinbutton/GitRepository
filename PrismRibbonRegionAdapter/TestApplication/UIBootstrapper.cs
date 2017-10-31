@@ -47,8 +47,8 @@ namespace TestApplication
 		{
 			var mappings = base.ConfigureRegionAdapterMappings();
 
-			mappings.RegisterMapping(typeof(Ribbon), ServiceLocator.Current.GetInstance<RibbonRegionAdapter>());
-			mappings.RegisterMapping(typeof(ContextMenu), ServiceLocator.Current.GetInstance<MergingItemsControlRegionAdapter>());
+			mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
+			mappings.RegisterMapping(typeof(ContextMenu), Container.Resolve<MergingItemsControlRegionAdapter>());
 
 			return mappings;
 		}
