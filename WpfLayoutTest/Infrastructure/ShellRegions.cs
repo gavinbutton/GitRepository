@@ -9,5 +9,6 @@ namespace Infrastructure
     public static class ShellRegions
     {
         public const string MainMenu = "MainMenu";
+        public const string ShellTab = "ShellTab";
     }
 }
