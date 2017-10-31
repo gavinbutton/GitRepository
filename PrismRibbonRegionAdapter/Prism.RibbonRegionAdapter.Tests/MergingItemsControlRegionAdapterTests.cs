@@ -4,6 +4,8 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestApplication;
 using TestApplication.Module1;
+using TestApplication.Views;
+using Prism.RibbonRegionAdapter;
 
 namespace Prism.RibbonRegionAdapter.Tests
 {

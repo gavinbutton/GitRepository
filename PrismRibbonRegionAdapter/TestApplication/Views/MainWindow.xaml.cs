@@ -15,19 +15,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TestApplication
+namespace TestApplication.Views
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow() : this(null)
+		public MainWindow()
 		{
-		}
-		public MainWindow(MainWindowViewModel viewModel)
-		{
-			DataContext = viewModel;
 			InitializeComponent();
 		}
 	}

@@ -5,6 +5,7 @@ using Microsoft.Practices.ServiceLocation;
 using TestApplication;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Controls;
+using TestApplication.Views;
 
 namespace Prism.RibbonRegionAdapter.Tests
 {

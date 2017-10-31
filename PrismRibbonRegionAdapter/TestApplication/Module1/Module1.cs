@@ -1,6 +1,7 @@
-﻿using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
+﻿using Prism.Modularity;
+using Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 
 namespace TestApplication.Module1
 {
@@ -10,14 +11,19 @@ namespace TestApplication.Module1
 
     private readonly IRegionManager _regionManager;
 
-		public Module1(IRegionManager regionManager)
+        private readonly IUnityContainer m_container;
+
+		public Module1(IRegionManager regionManager, IUnityContainer container)
     {
+            m_container = container;
       _regionManager = regionManager;
     }
 
 		public void Initialize()
 		{
-			_regionManager.RegisterViewWithRegion(ShellRegions.EditorContextMenu, GetContextMenu);
+            m_container.RegisterType<Module1HelloCommand, Module1HelloCommand>();
+
+            _regionManager.RegisterViewWithRegion(ShellRegions.EditorContextMenu, GetContextMenu);
 			//_regionManager.RegisterViewWithRegion(ShellRegions.MainMenu, typeof(Ribbon));
 		}
 

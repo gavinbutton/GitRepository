@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Regions;
 using System;
 using System.Collections.Specialized;
 using System.Linq;

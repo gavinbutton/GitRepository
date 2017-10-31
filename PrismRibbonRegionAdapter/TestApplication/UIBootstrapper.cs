@@ -1,37 +1,47 @@
-﻿using Autofac;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
+﻿using Prism.Modularity;
+using Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
-using Prism.AutofacExtension;
+using Microsoft.Practices.Unity;
 using Prism.RibbonRegionAdapter;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
+using Prism.Unity;
+using TestApplication.Views;
 
 namespace TestApplication
 {
-	public class UIBootstrapper : AutofacBootstrapper
+	public class UIBootstrapper : UnityBootstrapper
 	{
-
-		protected override void ConfigureContainer(ContainerBuilder builder)
+        protected override void ConfigureContainer()
 		{
-			base.ConfigureContainer(builder);
+			base.ConfigureContainer();
 
-			builder.RegisterAssemblyTypes(typeof(RibbonRegionAdapter).Assembly)
-				.InNamespaceOf<RibbonRegionAdapter>()
-				.AsSelf()
-				.SingleInstance();
+            Container.RegisterType<RibbonRegionAdapter,RibbonRegionAdapter>();
 
-			builder.RegisterAssemblyTypes(typeof(UIBootstrapper).Assembly)
-				.InNamespaceOf<MainWindowViewModel>()
-				.AsSelf()
-				.SingleInstance();
+            //builder.RegisterAssemblyTypes(typeof(RibbonRegionAdapter).Assembly)
+            //	.InNamespaceOf<RibbonRegionAdapter>()
+            //	.AsSelf()
+            //	.SingleInstance();
 
-			builder.RegisterAssemblyTypes(typeof(UIBootstrapper).Assembly)
-				.InNamespaceOf<Module1.Module1HelloCommand>()
-				.AsSelf()
-				.InstancePerDependency();
-		}
+            //builder.RegisterAssemblyTypes(typeof(UIBootstrapper).Assembly)
+            //	.InNamespaceOf<MainWindowViewModel>()
+            //	.AsSelf()
+            //	.SingleInstance();
+
+
+
+            Container.RegisterType<LoadModule1RibbonCommand, LoadModule1RibbonCommand>();
+            Container.RegisterType<UnloadModule1RibbonCommand, UnloadModule1RibbonCommand>();
+            Container.RegisterType<Module1.Module1HelloCommand, Module1.Module1HelloCommand>();
+
+            //LoadModule1RibbonCommand
+            //UnloadModule1RibbonCommand
+            //builder.RegisterAssemblyTypes(typeof(UIBootstrapper).Assembly)
+            //	.InNamespaceOf<Module1.Module1HelloCommand>()
+            //	.AsSelf()
+            //	.InstancePerDependency();
+        }
 
 		protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
 		{
@@ -64,8 +74,8 @@ namespace TestApplication
 
 		protected override DependencyObject CreateShell()
 		{
-			var shell = ServiceLocator.Current.GetInstance<MainWindow>();
-			var regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
+			var shell = Container.Resolve<MainWindow>();
+			var regionManager = Container.Resolve<IRegionManager>();
 			RegionManager.SetRegionManager(shell, regionManager);
 			RegionManager.UpdateRegions();
 			return shell;
