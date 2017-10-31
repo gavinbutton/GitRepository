@@ -1,12 +1,12 @@
 ﻿<Window x:Class="TestApplication.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-				xmlns:prism="http://www.codeplex.com/prism"
+				xmlns:ra="http://www.codeplex.com/prism"
 				xmlns:loc="clr-namespace:TestApplication"
 				xmlns:sys="clr-namespace:System;assembly=mscorlib"
 				xmlns:ext="clr-namespace:Prism.RibbonRegionAdapter;assembly=Prism.RibbonRegionAdapter"
-        xmlns:p="http://prismlibrary.com/"
-        p:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
         Title="MainWindow" Height="350" Width="800">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -14,24 +14,24 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<Ribbon prism:UIElementExtension.MergeOrder="10"
+		<Ribbon ra:UIElementExtension.MergeOrder="10"
 						x:Name="MainMenu" x:FieldModifier="protected internal"
 						prism:RegionManager.RegionName="{x:Static loc:ShellRegions.MainMenu}">
 			<RibbonTab Header="General"
-								 prism:UIElementExtension.MergeKey="{x:Static loc:MainMenuMergeKeys.GeneralTab}"
-								 prism:UIElementExtension.MergeOrder="10">
+								 ra:UIElementExtension.MergeKey="{x:Static loc:MainMenuMergeKeys.GeneralTab}"
+								 ra:UIElementExtension.MergeOrder="10">
 				<RibbonGroup Header="Group 1">
 					<RibbonButton Label="Group1.Button1 (Main)" Command="{Binding HelloCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
 				</RibbonGroup>
 				<RibbonGroup Header="Group 2"
-										 prism:UIElementExtension.MergeKey="{x:Static loc:MainMenuMergeKeys.GeneralTabGroup2}">
+										 ra:UIElementExtension.MergeKey="{x:Static loc:MainMenuMergeKeys.GeneralTabGroup2}">
 					<RibbonButton Label="Group2.Button1 (Main)" Command="{Binding HelloCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
 					<RibbonButton Label="Group2.Button2 (Main)" Command="{Binding HelloCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
 				</RibbonGroup>
 			</RibbonTab>
 			<RibbonTab Header="Last Tab"
-								 prism:UIElementExtension.MergeKey="{x:Static loc:MainMenuMergeKeys.LastTab}"
-								 prism:UIElementExtension.MergeOrder="{x:Static sys:Double.MaxValue}">
+								 ra:UIElementExtension.MergeKey="{x:Static loc:MainMenuMergeKeys.LastTab}"
+								 ra:UIElementExtension.MergeOrder="{x:Static sys:Double.MaxValue}">
 			</RibbonTab>
 		</Ribbon>
 		<StackPanel Grid.Row="1" Orientation="Horizontal">

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLayoutTest", "WpfLayoutTest\WpfLayoutTest.csproj", "{13EC6398-AA14-44E0-8676-83BBAAAD9FEA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -13,6 +13,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleB", "ModuleB\ModuleB.csproj", "{9219CD04-88EE-45FB-A749-C69E86A847EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D6128028-29A5-4D3A-B9A1-E2922CCEF3A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.RibbonRegionAdapter", "Prism.RibbonRegionAdapter\Prism.RibbonRegionAdapter.csproj", "{44C9B173-E458-4172-B204-C56CC9A01B20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,8 +38,15 @@ Global
 		{D6128028-29A5-4D3A-B9A1-E2922CCEF3A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6128028-29A5-4D3A-B9A1-E2922CCEF3A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6128028-29A5-4D3A-B9A1-E2922CCEF3A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44C9B173-E458-4172-B204-C56CC9A01B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44C9B173-E458-4172-B204-C56CC9A01B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44C9B173-E458-4172-B204-C56CC9A01B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44C9B173-E458-4172-B204-C56CC9A01B20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D97C872-B6CE-4057-BE34-647AEF2F57A4}
 	EndGlobalSection
 EndGlobal
