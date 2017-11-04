@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.2</version>
+    <title>A661 Toolbox</title>
+    <authors>GTB</authors>
+    <!--<licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
+    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <owners>GTB</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Toolbox for A661</description>
+    <releaseNotes>Initial Test Version</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>PRISM A661 toolbox</tags>
+    <dependencies />
+    <!--<contentFiles>
+      <files include="content/*.config"  buildAction="Content" copyToOutput="true" flatten="true" />
+      <files include="content/Test.xml"  buildAction="Content" copyToOutput="true" flatten="true" />
+    </contentFiles>-->
+  </metadata>
+  <files>
+    <file src="..\bin\$configuration$\$id$.exe.config" target="content/Content" />
+  </files>
+</package>
