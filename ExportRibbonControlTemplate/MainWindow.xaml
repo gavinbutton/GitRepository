@@ -33,7 +33,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <!--Command="{Binding DataContext.OpenRecentFileCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"-->
-                                        <RibbonApplicationMenuItem Header="{Binding FileName}" ToolTip="{Binding FilePath}" 
+                                        <RibbonApplicationMenuItem Height="25"  Header="{Binding FileName}" ToolTip="{Binding FilePath}" 
                                                          
                                                          CommandParameter="{Binding FilePath}"/>
                                     </DataTemplate>
