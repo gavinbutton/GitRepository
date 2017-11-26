@@ -23,6 +23,12 @@ namespace ExportRibbonControlTemplate
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel() { MostRecentFiles = new FileItem[]
+                {
+                    new FileItem(){ FileName="A", FilePath="C:\\a.txt", Index=1},
+                    new FileItem(){ FileName="b", FilePath="C:\\B.txt", Index=2},
+                }
+            };
         }
     }
 }

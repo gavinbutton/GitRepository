@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportRibbonControlTemplate", "ExportRibbonControlTemplate\ExportRibbonControlTemplate.csproj", "{4A4560B7-CD5E-4B7B-8401-AF36D1A232CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportRibbonControlTemplate", "ExportRibbonControlTemplate.csproj", "{4A4560B7-CD5E-4B7B-8401-AF36D1A232CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
