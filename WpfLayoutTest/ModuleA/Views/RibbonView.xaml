@@ -33,6 +33,13 @@
                 <RibbonApplicationMenuItem Header="Options" ImageSource="/ModuleA;component/Images/options.png" />
                 <RibbonApplicationMenuItem Header="Exit" ImageSource="/ModuleA;component/Images/quit.png" />
                 <RibbonApplicationMenuItem Header="About" Command="{Binding AboutCommand}"/>
+                <RibbonApplicationMenu.AuxiliaryPaneContent>
+                    <StackPanel>
+                        <TextBlock Text="Recent Files" />
+                        <Separator />
+                        <RibbonApplicationMenuItem Header="Hello"/>
+                    </StackPanel>
+                </RibbonApplicationMenu.AuxiliaryPaneContent>
             </RibbonApplicationMenu>
         </Ribbon.ApplicationMenu>
         <!-- Ribbon Tab #1: Home -->

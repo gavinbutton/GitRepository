@@ -175,6 +175,10 @@
       <Project>{D6128028-29A5-4D3A-B9A1-E2922CCEF3A9}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Prism.RibbonRegionAdapter\Prism.RibbonRegionAdapter.csproj">
+      <Project>{44c9b173-e458-4172-b204-c56cc9a01b20}</Project>
+      <Name>Prism.RibbonRegionAdapter</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\monogram.png" />

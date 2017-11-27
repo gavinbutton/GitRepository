@@ -10,8 +10,7 @@ namespace ModuleB
     {
         IUnityContainer _container;
         IRegionManager _regionManager;
-        IRegion _region;
-
+        
         public ModuleBModule(IUnityContainer container, RegionManager regionManager)
         {
             _container = container;

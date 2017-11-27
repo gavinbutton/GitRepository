@@ -14,7 +14,7 @@
 						x:Name="MainMenu" x:FieldModifier="protected internal"
 						prism:RegionManager.RegionName="{x:Static inf:ShellRegions.MainMenu}">
         <RibbonTab Header="General"
-								 ra:UIElementExtension.MergeKey="{x:Static inf:MainMenuMergeKeys.ShellTab}"
+								 ra:UIElementExtension.MergeKey="{x:Static inf:ShellRegions.ShellTab}"
 								 ra:UIElementExtension.MergeOrder="10"/>
     </Ribbon>
 </UserControl>

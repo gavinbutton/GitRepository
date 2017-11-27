@@ -11,8 +11,7 @@ namespace ModuleA
     {
         IUnityContainer _container;
         IRegionManager _regionManager;
-        IRegion _region;
-
+        
         public ModuleAModule(IUnityContainer container, RegionManager regionManager)
         {
             _container = container;

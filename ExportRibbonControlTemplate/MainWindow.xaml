@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:ExportRibbonControlTemplate"
         xmlns:Primitives="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon" x:Class="ExportRibbonControlTemplate.MainWindow"
         mc:Ignorable="d"
+    x:Name="root"
         Title="MainWindow" Height="350" Width="525">
 
     <Window.Resources>
@@ -34,7 +35,7 @@
                                     <DataTemplate>
                                         <!--Command="{Binding DataContext.OpenRecentFileCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"-->
                                         <RibbonApplicationMenuItem Height="25"  Header="{Binding FileName}" ToolTip="{Binding FilePath}" 
-                                                         
+                                                         Command="{Binding Path=DataContext.RecentFileCommand, ElementName=root}"
                                                          CommandParameter="{Binding FilePath}"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
