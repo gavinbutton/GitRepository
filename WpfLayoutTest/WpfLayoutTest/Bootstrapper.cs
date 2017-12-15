@@ -10,6 +10,9 @@ using System.Linq;
 using System.Reflection;
 using WpfLayoutTest.Services;
 using Infrastructure;
+using Prism.Regions;
+using System.Windows.Controls.Ribbon;
+using Prism.RibbonRegionAdapter;
 
 namespace WpfLayoutTest
 {
@@ -30,6 +33,9 @@ namespace WpfLayoutTest
         /// </remarks>
         protected override DependencyObject CreateShell()
         {
+            var rm = Container.Resolve<IRegionManager>();
+
+            rm.RegisterViewWithRegion(ShellRegions.RibbonRegion, typeof(ShellRibbonView));
             return Container.Resolve<Shell>();
         }
 
@@ -87,6 +93,21 @@ namespace WpfLayoutTest
                 .ToList();
             items.ForEach(m => logger.Log(m, Category.Info, Priority.None));
 
+        }
+
+        /// <summary>
+        /// Configures the default region adapter mappings to use in the application, in order
+        /// to adapt UI controls defined in XAML to use a region and register it automatically.
+        /// May be overwritten in a derived class to add specific mappings required by the application.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="T:Prism.Regions.RegionAdapterMappings" /> instance containing all the mappings.
+        /// </returns>
+        protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+        {
+            var mappings = base.ConfigureRegionAdapterMappings();
+            mappings.RegisterMapping(typeof(Ribbon), Container.Resolve<RibbonRegionAdapter>());
+            return mappings;
         }
     }
 }

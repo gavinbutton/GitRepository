@@ -11,8 +11,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
     <Ribbon ra:UIElementExtension.MergeOrder="10"
-						x:Name="MainMenu" x:FieldModifier="protected internal"
-						prism:RegionManager.RegionName="{x:Static inf:ShellRegions.MainMenu}">
+						x:Name="ShellRibbon" x:FieldModifier="protected internal"
+                        prism:RegionManager.RegionName="{x:Static inf:ShellRegions.ShellRibbon}">
         <RibbonTab Header="General"
 								 ra:UIElementExtension.MergeKey="{x:Static inf:ShellRegions.ShellTab}"
 								 ra:UIElementExtension.MergeOrder="10"/>

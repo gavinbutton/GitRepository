@@ -1,7 +1,5 @@
-﻿using Prism.Regions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,27 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfLayoutTest.Views;
-using System.Windows.Controls.Ribbon;
 
-namespace WpfLayoutTest.Views
+namespace RibbonMinimizedTest
 {
     /// <summary>
-    /// Interaction logic for Shell.xaml
+    /// Interaction logic for RibbonView.xaml
     /// </summary>
-    public partial class Shell : RibbonWindow
+    public partial class RibbonView : UserControl
     {
-        public Shell()
+        public RibbonView()
         {
             InitializeComponent();
         }
-
-        //[Import]
-        //public ShellViewModel ViewModel
-        //{
-        //    set { DataContext = value; }
-        //}
-
     }
 }

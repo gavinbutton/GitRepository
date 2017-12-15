@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModuleA.Views
+namespace RibbonMinimizedTest
 {
     /// <summary>
-    /// Interaction logic for CommandView.xaml
+    /// Interaction logic for MainContent.xaml
     /// </summary>
-    public partial class CommandView : UserControl
+    public partial class TestView : UserControl
     {
-        public CommandView()
+        public TestView()
         {
             InitializeComponent();
         }

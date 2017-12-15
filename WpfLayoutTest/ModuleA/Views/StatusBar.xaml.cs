@@ -1,7 +1,5 @@
-﻿using Prism.Regions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,27 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfLayoutTest.Views;
-using System.Windows.Controls.Ribbon;
 
-namespace WpfLayoutTest.Views
+namespace ModuleA.Views
 {
     /// <summary>
-    /// Interaction logic for Shell.xaml
+    /// Interaction logic for StatusBar.xaml
     /// </summary>
-    public partial class Shell : RibbonWindow
+    public partial class StatusBar : UserControl
     {
-        public Shell()
+        public StatusBar()
         {
             InitializeComponent();
         }
-
-        //[Import]
-        //public ShellViewModel ViewModel
-        //{
-        //    set { DataContext = value; }
-        //}
-
     }
 }

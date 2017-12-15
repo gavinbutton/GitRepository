@@ -8,7 +8,8 @@ namespace Infrastructure
 {
     public static class ShellRegions
     {
-        public const string MainMenu = "MainMenu";
+        public const string RibbonRegion = "RibbonRegion";
+        public const string ShellRibbon = "ShellRibbon";
         public const string ShellTab = "ShellTab";
     }
 }

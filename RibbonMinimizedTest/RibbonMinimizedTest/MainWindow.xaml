@@ -4,22 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RibbonMinimizedTest"
+        xmlns:prism="http://prismlibrary.com/"      
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <StackPanel Orientation="Vertical">
-    <Ribbon>
-            <Ribbon.QuickAccessToolBar>
-                <RibbonQuickAccessToolBar>
-                    <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="icon"/>
-                </RibbonQuickAccessToolBar>
-            </Ribbon.QuickAccessToolBar>
-            
-        <RibbonTab Header="Home">
-            <RibbonGroup Header="Test">
-                <RibbonButton Label="Hello"/>
-            </RibbonGroup>
-        </RibbonTab>
-    </Ribbon>
-        <TextBlock>Hello World</TextBlock>
-    </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Row="0" prism:RegionManager.RegionName="RibbonRegion"/>
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion"/>
+        
+    </Grid>
 </RibbonWindow>
