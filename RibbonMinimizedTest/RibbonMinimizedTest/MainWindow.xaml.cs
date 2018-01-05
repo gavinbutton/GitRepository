@@ -25,5 +25,10 @@ namespace RibbonMinimizedTest
         {
             InitializeComponent();
         }
+
+        private void RibbonWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 }

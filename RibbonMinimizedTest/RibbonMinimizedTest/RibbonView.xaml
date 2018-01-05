@@ -5,17 +5,63 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RibbonMinimizedTest"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="300">
-    <Ribbon>
+             d:DesignHeight="150" d:DesignWidth="300"
+             Loaded="UserControl_Loaded"    
+             >
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="ExecuteNew" CanExecute="CanExecuteNew"/>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="ExecuteSave" CanExecute="CanExecuteSave"/>
+    </UserControl.CommandBindings>
+    <Ribbon Name="ribbonControl">
+        <Ribbon.HelpPaneContent>
+            <RibbonButton ToolTip="Click to get help on selected item" SmallImageSource="/RibbonMinimizedTest;component\Images\statushelp_16x.png" Command="ApplicationCommands.Help"/>
+        </Ribbon.HelpPaneContent>
         <Ribbon.QuickAccessToolBar>
             <RibbonQuickAccessToolBar>
-                <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="icon"/>
+                <!--<RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="icon"/>-->
             </RibbonQuickAccessToolBar>
         </Ribbon.QuickAccessToolBar>
 
+        <Ribbon.ApplicationMenu>
+            
+            <RibbonApplicationMenu 
+                ToolTip="Click here to Open save or create new files"
+                KeyTip="F" 
+                SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp">
+                <RibbonApplicationSplitMenuItem Command="{Binding FileNewCommand}" ToolTip="New File" Header="New UADF" ImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png" QuickAccessToolBarImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png">
+                    <RibbonApplicationMenuItem Command="{Binding FileNewCommand}" Header="New UADF" ImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png" QuickAccessToolBarImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"/>
+                    <RibbonApplicationMenuItem  Command="{Binding FileNewWidgetSetCommand}" Header="New Widget Set Definition" ImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png" QuickAccessToolBarImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"/>
+                    <RibbonApplicationMenuItem Command="{Binding FileNewLayerRefCommand}" Header="New Layer Ref" ImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png" QuickAccessToolBarImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"/>
+                </RibbonApplicationSplitMenuItem>
+
+                <RibbonApplicationMenuItem 
+                    ToolTip="Settings" 
+                    Header="Settings" 
+                    ImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"
+                    QuickAccessToolBarImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"
+                    Command="{Binding OpenSettingsCommand}"
+                    />
+                <RibbonApplicationMenuItem 
+                    ToolTip="Toolbox version information" 
+                    Header="About Toolbox" 
+                    ImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"
+                    QuickAccessToolBarImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"
+                    Command="{Binding AboutCommand}"
+                    />
+                <RibbonApplicationMenu.AuxiliaryPaneContent>
+                    <ContentControl/>
+                    <!--<ContentControl prism:RegionManager.RegionName="{x:Static inf:ShellRegions.RibbonAuxiliaryRegion}" />-->
+                </RibbonApplicationMenu.AuxiliaryPaneContent>
+                <RibbonApplicationMenu.FooterPaneContent>
+                    <RibbonButton HorizontalAlignment="Right" Label="Exit" SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Command="{Binding ExitCommand}"/>
+                </RibbonApplicationMenu.FooterPaneContent>
+            </RibbonApplicationMenu>
+        </Ribbon.ApplicationMenu>
+
         <RibbonTab Header="Home">
             <RibbonGroup Header="Test">
-                <RibbonButton Label="Hello"/>
+                <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="New" Command="ApplicationCommands.New"/>
+                <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="Save" Command="ApplicationCommands.Save"/>
             </RibbonGroup>
         </RibbonTab>
     </Ribbon>

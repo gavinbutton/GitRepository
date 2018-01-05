@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:RibbonMinimizedTest"
         xmlns:prism="http://prismlibrary.com/"      
         mc:Ignorable="d"
+              Closing="RibbonWindow_Closing"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
