@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace RibbonMinimizedTest
@@ -52,7 +54,7 @@ namespace RibbonMinimizedTest
         
 
         private void LoadQAT()
-        { 
+        {
             var serializer = new DataContractJsonSerializer(typeof(State));
             State state;
 
@@ -73,8 +75,7 @@ namespace RibbonMinimizedTest
                     {
                         try
                         {
-                            var clonedControl = control.XamlClone();
-                            ribbonControl.QuickAccessToolBar.Items.Add(clonedControl);
+                            AddControlToQAT(control);
                         }
                         catch(Exception e)
                         {
@@ -82,6 +83,20 @@ namespace RibbonMinimizedTest
                         }
                     }
                 }
+            }
+        }
+
+        private void AddControlToQAT(UIElement originalSource)
+        {
+            RibbonQuickAccessToolBarCloneEventArgs e = new RibbonQuickAccessToolBarCloneEventArgs(originalSource);
+            originalSource.RaiseEvent(e);
+
+            Ribbon ribbon = RibbonControlService.GetRibbon(originalSource);
+            if (ribbon != null &&
+                ribbon.QuickAccessToolBar != null &&
+                e.CloneInstance != null)
+            {
+                ribbon.QuickAccessToolBar.Items.Add(e.CloneInstance);
             }
         }
 
@@ -129,45 +144,62 @@ namespace RibbonMinimizedTest
 
         private string GetRibbonControlKey(Control control)
         {
-            string key = string.Empty;
-            string attribute = NameAttribute;
-            string id = control.Name;
+            string key = control.Name;
             
-            if(control is RibbonButton && string.IsNullOrEmpty(id))
+            if(control is RibbonButton && string.IsNullOrEmpty(key))
             {
-                attribute = LabelAttribute;
                 var c = control as RibbonButton;
-                id = c.Label;
+                key = c.Label;
 
-                if(string.IsNullOrEmpty(id))
+                if(string.IsNullOrEmpty(key))
                 {
-                    attribute = CommandAttribute;
-                    id = GetCommandExpression(c);
+                    key = GetCommandExpression(c);
+                }
+            }
+            else if (control is RibbonMenuButton && string.IsNullOrEmpty(key))
+            {
+                var c = control as RibbonMenuButton;
+                key = c.Label;
+
+                if (string.IsNullOrEmpty(key))
+                {
+                    key = GetCommandExpression(c);
                 }
             }
 
-            else if(control is HeaderedItemsControl && string.IsNullOrEmpty(id))
+            else if(control is HeaderedItemsControl && string.IsNullOrEmpty(key))
             {
-                attribute = HeaderAttribute;
                 var c = control as HeaderedItemsControl;
-                id = c.Header.ToString();
+                key = c.Header.ToString();
             }
-
-            if(!string.IsNullOrEmpty(id))
-            {
-                //key = $"{attribute}={id}";
-                key = id;
-            }
+            
             return key;
         }
 
         private string GetCommandExpression(Control control)
         {
             var command = string.Empty;
-            var xamlDoc = XamlWriter.Save(control);
-            XDocument doc = XDocument.Parse(xamlDoc);
-            command = doc.Root.Attribute("Command")?.Value;
+            using (var stream = new MemoryStream())
+            {
+                var writer = XmlWriter.Create(stream, new XmlWriterSettings()
+                {
+                    Indent = true,
+                    ConformanceLevel = ConformanceLevel.Fragment,
+                    OmitXmlDeclaration = true,
+                    NamespaceHandling = NamespaceHandling.OmitDuplicates,
+                });
 
+                var xamlManager = new XamlDesignerSerializationManager(writer)
+                {
+                    XamlWriterMode = XamlWriterMode.Expression
+                };
+
+                XamlWriter.Save(control, xamlManager);
+                stream.Seek(0, SeekOrigin.Begin);
+                XDocument doc = XDocument.Load(stream);
+                command = doc.Root.Attribute("Command")?.Value;
+            }
+            
             return command;
         }
 
