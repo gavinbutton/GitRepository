@@ -17,7 +17,7 @@ namespace RibbonMinimizedTest
             FileNewCommand = new DelegateCommand(() => MessageBox.Show("FileNew"));
             FileNewWidgetSetCommand = new DelegateCommand(() => MessageBox.Show("NewWidgetSet"));
             FileNewLayerRefCommand = new DelegateCommand(() => MessageBox.Show("LayerRef"));
-            ExitCommand = new DelegateCommand(() => MessageBox.Show("LayerRef"));
+            ExitCommand = new DelegateCommand(() => MessageBox.Show("Exit"));
         }
 
         public ICommand OpenSettingsCommand { get; set; }

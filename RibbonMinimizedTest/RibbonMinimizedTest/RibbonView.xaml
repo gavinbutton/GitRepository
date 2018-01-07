@@ -14,7 +14,9 @@
     </UserControl.CommandBindings>
     <Ribbon Name="ribbonControl">
         <Ribbon.HelpPaneContent>
-            <RibbonButton ToolTip="Click to get help on selected item" SmallImageSource="/RibbonMinimizedTest;component\Images\statushelp_16x.png" Command="ApplicationCommands.Help"/>
+            <StackPanel>
+                <RibbonButton ToolTip="Click to get help on selected item" SmallImageSource="/RibbonMinimizedTest;component\Images\statushelp_16x.png" Command="ApplicationCommands.Help"/>
+            </StackPanel>
         </Ribbon.HelpPaneContent>
         <Ribbon.QuickAccessToolBar>
             <RibbonQuickAccessToolBar>
@@ -35,6 +37,7 @@
                 </RibbonApplicationSplitMenuItem>
 
                 <RibbonApplicationMenuItem 
+                    x:Name="id"
                     ToolTip="Settings" 
                     Header="Settings" 
                     ImageSource="/RibbonMinimizedTest;component\Images\Cancel_32x.png"

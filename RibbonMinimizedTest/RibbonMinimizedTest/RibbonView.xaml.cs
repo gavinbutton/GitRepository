@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Ribbon;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -20,12 +21,17 @@ namespace RibbonMinimizedTest
     /// </summary>
     public partial class RibbonView : UserControl
     {
-        private const string NameAttribute = "Name";
-        private const string LabelAttribute = "Label";
-        private const string HeaderAttribute = "Header";
-        private const string CommandAttribute = "Command";
 
         private string filename = "QAT.json";
+
+        //private const string NameAttribute = "Name";
+        private const string LabelAttribute = "Label";
+        private const string HeaderAttribute = "Header";
+        private const string ToolTipAttribute = "ToolTip";
+        private const string CommandAttribute = "Command";
+
+        private string[] matchProperties = { LabelAttribute, HeaderAttribute, ToolTipAttribute };
+
         public RibbonView()
         {
             InitializeComponent();
@@ -67,9 +73,9 @@ namespace RibbonMinimizedTest
 
                 foreach (var key in state.QatKeys)
                 {
-                    var control = FindRibbonControlByKey(key, ribbonControl.Items) ??
-                        FindRibbonControlByKey(key, ribbonControl.ApplicationMenu) ??
-                        FindRibbonControlByKey(key, ribbonControl.HelpPaneContent);
+                    var control = FindRibbonControlByKey(key, ribbonControl) ??
+                                  FindRibbonControlByKey(key, ribbonControl.ApplicationMenu) ??
+                                  FindRibbonControlByKey(key, ribbonControl.HelpPaneContent as UIElement); 
 
                     if (control != null)
                     {
@@ -100,39 +106,29 @@ namespace RibbonMinimizedTest
             }
         }
 
-        private Control FindRibbonControlByKey(string key, object i)
+        private UIElement FindRibbonControlByKey(string key, UIElement parent)
         {
-            Control control = null;
-            
-            if (i is RibbonButton)
-            {
-                var c = i as RibbonButton;
-                control = GetRibbonControlKey(c) == key ? c : null;
-            }
-            else if (i is HeaderedItemsControl)
-            {
-                var c = i as HeaderedItemsControl;
-                control = GetRibbonControlKey(c) == key ? c : null;
-            }
+            UIElement control = GetRibbonControlKey(parent) == key ? parent : null;
 
-            if (control == null && i is ItemsControl)
+            for (int i = 0; parent != null && control == null && i < VisualTreeHelper.GetChildrenCount(parent) ; i++)
             {
-                var c = i as ItemsControl;
-                control = FindRibbonControlByKey(key, c?.Items);
+                // Retrieve child visual at specified index value.
+                UIElement childVisual = (UIElement)VisualTreeHelper.GetChild(parent, i);
+
+                // Enumerate children of the child visual object.
+                control = FindRibbonControlByKey(key, childVisual);
             }
             
-
             return control;
         }
-        
 
-        private Control FindRibbonControlByKey(string key, ItemCollection collection)
+        private UIElement FindRibbonControlByKey(string key, ItemsControl parent)
         {
-            Control control = null;
+            UIElement control = null;
 
-            foreach(var i in collection)
+            foreach (var i in parent.Items)
             {
-                control = FindRibbonControlByKey(key, i);
+                control = FindRibbonControlByKey(key, (UIElement)i);
 
                 if (control != null)
                 {
@@ -142,62 +138,54 @@ namespace RibbonMinimizedTest
             return control;
         }
 
-        private string GetRibbonControlKey(Control control)
+        private string GetRibbonControlKey(UIElement control)
         {
-            string key = control.Name;
-            
-            if(control is RibbonButton && string.IsNullOrEmpty(key))
-            {
-                var c = control as RibbonButton;
-                key = c.Label;
+            string key = null;
 
-                if(string.IsNullOrEmpty(key))
+            foreach (var propertyName in matchProperties)
+            {
+                key = control?.GetType()?.GetProperty(propertyName)?.GetValue(control, null) as string;
+
+                if(!string.IsNullOrEmpty(key))
                 {
-                    key = GetCommandExpression(c);
+                    break;
                 }
             }
-            else if (control is RibbonMenuButton && string.IsNullOrEmpty(key))
-            {
-                var c = control as RibbonMenuButton;
-                key = c.Label;
-
-                if (string.IsNullOrEmpty(key))
-                {
-                    key = GetCommandExpression(c);
-                }
-            }
-
-            else if(control is HeaderedItemsControl && string.IsNullOrEmpty(key))
-            {
-                var c = control as HeaderedItemsControl;
-                key = c.Header.ToString();
-            }
             
+            if(string.IsNullOrEmpty(key))
+            {
+                key = GetCommandExpression(control);
+            }
+
             return key;
         }
 
-        private string GetCommandExpression(Control control)
+        private string GetCommandExpression(UIElement control)
         {
             var command = string.Empty;
-            using (var stream = new MemoryStream())
+
+            if (control != null)
             {
-                var writer = XmlWriter.Create(stream, new XmlWriterSettings()
+                using (var stream = new MemoryStream())
                 {
-                    Indent = true,
-                    ConformanceLevel = ConformanceLevel.Fragment,
-                    OmitXmlDeclaration = true,
-                    NamespaceHandling = NamespaceHandling.OmitDuplicates,
-                });
+                    var writer = XmlWriter.Create(stream, new XmlWriterSettings()
+                    {
+                        Indent = true,
+                        ConformanceLevel = ConformanceLevel.Fragment,
+                        OmitXmlDeclaration = true,
+                        NamespaceHandling = NamespaceHandling.OmitDuplicates,
+                    });
 
-                var xamlManager = new XamlDesignerSerializationManager(writer)
-                {
-                    XamlWriterMode = XamlWriterMode.Expression
-                };
+                    var xamlManager = new XamlDesignerSerializationManager(writer)
+                    {
+                        XamlWriterMode = XamlWriterMode.Expression
+                    };
 
-                XamlWriter.Save(control, xamlManager);
-                stream.Seek(0, SeekOrigin.Begin);
-                XDocument doc = XDocument.Load(stream);
-                command = doc.Root.Attribute("Command")?.Value;
+                    XamlWriter.Save(control, xamlManager);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    XDocument doc = XDocument.Load(stream);
+                    command = doc.Root.Attribute(CommandAttribute)?.Value;
+                }
             }
             
             return command;
