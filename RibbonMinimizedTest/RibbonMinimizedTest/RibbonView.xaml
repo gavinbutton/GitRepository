@@ -13,10 +13,11 @@
         <CommandBinding Command="ApplicationCommands.Save" Executed="ExecuteSave" CanExecute="CanExecuteSave"/>
     </UserControl.CommandBindings>
     <Ribbon Name="ribbonControl">
-        <Ribbon.HelpPaneContent>
-            <StackPanel>
+        <Ribbon.HelpPaneContent> TODOFIX THIS
+            <RibbonButton ToolTip="Click to get help on selected item" SmallImageSource="/RibbonMinimizedTest;component\Images\statushelp_16x.png" Command="ApplicationCommands.Help"/>
+            <!--<StackPanel>
                 <RibbonButton ToolTip="Click to get help on selected item" SmallImageSource="/RibbonMinimizedTest;component\Images\statushelp_16x.png" Command="ApplicationCommands.Help"/>
-            </StackPanel>
+            </StackPanel>-->
         </Ribbon.HelpPaneContent>
         <Ribbon.QuickAccessToolBar>
             <RibbonQuickAccessToolBar>
@@ -57,6 +58,14 @@
                 </RibbonApplicationMenu.AuxiliaryPaneContent>
                 <RibbonApplicationMenu.FooterPaneContent>
                     <RibbonButton HorizontalAlignment="Right" Label="Exit" SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Command="{Binding ExitCommand}"/>
+                    <!--<RibbonGallery>
+                        <RibbonGalleryCategory Header="Gallery1" MaxColumnCount="1">
+                            <RibbonGalleryItem HorizontalAlignment="Right">
+                                <RibbonButton Label="Exit" Command="{Binding ExitCommand}"/>
+                            </RibbonGalleryItem>
+                        </RibbonGalleryCategory>
+                    </RibbonGallery>-->
+                    
                 </RibbonApplicationMenu.FooterPaneContent>
             </RibbonApplicationMenu>
         </Ribbon.ApplicationMenu>

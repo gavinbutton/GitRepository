@@ -53,11 +53,7 @@ namespace RibbonMinimizedTest
                 serializer.WriteObject(stream, state);
             }
         }
-
-        private ItemsControl m_T2Test;
-        private ItemsControl m_T2G2Test;
-        private RibbonButton m_T2G2B1Test;
-
+        
         private void LoadQAT()
         {
             var serializer = new DataContractJsonSerializer(typeof(State));
@@ -74,28 +70,24 @@ namespace RibbonMinimizedTest
                 var existingKeys = ribbonControl.QuickAccessToolBar.Items
                 .Cast<DependencyObject>()
                 .Select(item => GetRibbonControlKey(item));
-
-                foreach (var key in state.QatKeys)
+                
+                foreach (var key in state.QatKeys.Except(existingKeys))
                 {
-                    if (!existingKeys.Contains(key))
+                    var control = FindRibbonControlByKey(key, ribbonControl) ??
+                                      FindRibbonControlByKey(key, ribbonControl?.ApplicationMenu) ??
+                                      FindRibbonControlByKey(key, ribbonControl?.ApplicationMenu?.FooterPaneContent as DependencyObject) ??
+                                      FindRibbonControlByKey(key, ribbonControl?.ApplicationMenu?.AuxiliaryPaneContent as DependencyObject) ??
+                                      FindRibbonControlByKey(key, ribbonControl?.HelpPaneContent as DependencyObject);
+
+                    if (control != null)
                     {
-                        m_T2Test = ribbonControl.Items[1] as ItemsControl;
-                        m_T2G2Test = m_T2Test.Items[1] as ItemsControl;
-                        m_T2G2B1Test = m_T2G2Test.Items[0] as RibbonButton;
-                        var control = FindRibbonControlByKey(key, ribbonControl) ??
-                                      FindRibbonControlByKey(key, ribbonControl.ApplicationMenu) ??
-                                      FindRibbonControlByKey(key, ribbonControl.HelpPaneContent as UIElement);
-
-                        if (control != null)
+                        try
                         {
-                            try
-                            {
-                                AddControlToQAT((UIElement)control);
-                            }
-                            catch (Exception e)
-                            {
+                            AddControlToQAT((UIElement)control);
+                        }
+                        catch (Exception e)
+                        {
 
-                            }
                         }
                     }
                 }
@@ -118,49 +110,40 @@ namespace RibbonMinimizedTest
 
         private DependencyObject FindRibbonControlByKey(string key, DependencyObject parent)
         {
-            if(parent == m_T2Test)
-            {
-            }
-
-            if(parent == m_T2G2Test)
-            {
-            }
-
-            if(parent == m_T2G2B1Test)
-            {
-
-            }
-
             DependencyObject control = GetRibbonControlKey(parent) == key ? parent : null;
 
-            for (int i = 0; parent != null && control == null && i < VisualTreeHelper.GetChildrenCount(parent) ; i++)
+            if (control == null)
             {
-                // Retrieve child visual at specified index value.
-                DependencyObject childVisual = VisualTreeHelper.GetChild(parent, i);
-                
-                // Enumerate children of the child visual object.
-                control = FindRibbonControlByKey(key, childVisual);
+                if (parent is ItemsControl)
+                {
+                    foreach (var i in ((ItemsControl)parent).Items)
+                    {
+                        control = FindRibbonControlByKey(key, i as DependencyObject);
+
+                        if (control != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; control == null && i < VisualTreeHelper.GetChildrenCount(parent); i++)
+                    {
+                        // Retrieve child visual at specified index value.
+                        DependencyObject childVisual = VisualTreeHelper.GetChild(parent, i);
+
+                        // Enumerate children of the child visual object.
+                        control = FindRibbonControlByKey(key, childVisual);
+                    }
+                }
             }
+
             
+
             return control;
         }
-
-        //private UIElement FindRibbonControlByKey(string key, ItemsControl parent)
-        //{
-        //    UIElement control = null;
-
-        //    foreach (var i in parent.Items)
-        //    {
-        //        control = FindRibbonControlByKey(key, (UIElement)i);
-
-        //        if (control != null)
-        //        {
-        //            break;
-        //        }
-        //    }
-        //    return control;
-        //}
-
+        
         private string GetRibbonControlKey(DependencyObject control)
         {
             string key = null;
