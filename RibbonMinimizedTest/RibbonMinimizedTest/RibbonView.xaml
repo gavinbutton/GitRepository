@@ -20,7 +20,7 @@
         </Ribbon.HelpPaneContent>
         <Ribbon.QuickAccessToolBar>
             <RibbonQuickAccessToolBar>
-                <!--<RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="icon"/>-->
+                <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="icon"/>
             </RibbonQuickAccessToolBar>
         </Ribbon.QuickAccessToolBar>
 
@@ -65,6 +65,17 @@
             <RibbonGroup Header="Test">
                 <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="New" Command="ApplicationCommands.New"/>
                 <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="Save" Command="ApplicationCommands.Save"/>
+            </RibbonGroup>
+            <RibbonGroup Header="Home Group Two">
+                <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="T1G2 One" Command="{Binding T1G2Command}"/>
+            </RibbonGroup>
+        </RibbonTab>
+        <RibbonTab Header="TabTwo">
+            <RibbonGroup Header="T2 Group One">
+                
+            </RibbonGroup>
+            <RibbonGroup Header="T2 Group Two">
+                <RibbonButton SmallImageSource="/RibbonMinimizedTest;component\Images\GE16x16.bmp" Label="T2G2 One" Command="{Binding T2G2Command}"/>
             </RibbonGroup>
         </RibbonTab>
     </Ribbon>
