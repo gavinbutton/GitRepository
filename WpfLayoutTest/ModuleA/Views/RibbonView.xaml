@@ -68,6 +68,9 @@
         </RibbonTab>
         <!-- Ribbon Tab #2: -->
         <RibbonTab Header="Insert" KeyTip="I">
+            <RibbonGroup>
+                <ComboBox ItemsSource="{Binding Items}" SelectedItem="{Binding Zoom}"/>
+            </RibbonGroup>
         </RibbonTab>
         <!-- Ribbon Tab #3: -->
         <RibbonTab Header="PageLayout" KeyTip="L">
