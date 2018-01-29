@@ -44,7 +44,7 @@ namespace RibbonMinimizedTest
                 .Cast<UIElement>()
                 .Select(item => GetRibbonControlKey(item as UIElement));
             
-            var state = new State() { QatKeys = qatKeys.ToArray() };
+            var state = new State() { QuickAccessToolbarKeys = qatKeys.ToArray() };
 
             var serializer = new DataContractJsonSerializer(typeof(State));
 
@@ -71,7 +71,7 @@ namespace RibbonMinimizedTest
                 .Cast<DependencyObject>()
                 .Select(item => GetRibbonControlKey(item));
                 
-                foreach (var key in state.QatKeys.Except(existingKeys))
+                foreach (var key in state.QuickAccessToolbarKeys.Except(existingKeys))
                 {
                     var control = FindRibbonControlByKey(key, ribbonControl) ??
                                       FindRibbonControlByKey(key, ribbonControl?.ApplicationMenu) ??
@@ -208,6 +208,11 @@ namespace RibbonMinimizedTest
         private void Parent_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveQAT();
+        }
+
+        private void ExecuteHelp(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("Help");
         }
 
         private void ExecuteNew(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)

@@ -7,10 +7,19 @@ using System.Threading.Tasks;
 
 namespace RibbonMinimizedTest
 {
+    /// <summary>
+    /// Contains the state of the Quick Access Toolbar
+    /// </summary>
     [DataContract]
-    public class State
+    internal class State
     {
+        /// <summary>
+        /// Gets or sets the quick access toolbar keys.
+        /// </summary>
+        /// <value>
+        /// The quick access toolbar keys.
+        /// </value>
         [DataMember]
-        public string[] QatKeys { get; set; }
+        public string[] QuickAccessToolbarKeys { get; set; }
     }
 }
